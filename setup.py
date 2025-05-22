@@ -10,9 +10,11 @@ setup(
         'pandas',
         'rasterio',
         'fiona',
-        'numpy',
+        'numpy==1.26.4',
         'matplotlib',
         'scikit-learn',
-        'shapely'
+        'shapely',
+        'pygbif'
+        'asyncio'
     ],
     )
