@@ -1,5 +1,5 @@
 from pygbif import species as sp
-from mycoCarte import utils
+from mycoCarte import Utils
 # Species class based on gbif 
 class Specie:
     def __init__(self, specie_name):
@@ -12,7 +12,7 @@ class Specie:
         # From prepare_species_gbif funct 
         self.folder = 'data/raw/gbifQueries/' + self.name_underscored + '/'
         # Create folder for specie data, if already created returns path 
-        utils.create_folder(self.folder)
+        Utils.create_folder(self.folder)
 
         #Set expected file for occurence data 
         self.occurence_file = self.folder + self.name_underscored + '.csv'

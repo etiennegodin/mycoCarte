@@ -1,4 +1,43 @@
 import geopandas as gpd 
+CLUSTERED_GRID_OUTPUT_PATH = 'data/interim/geodata/vector/geoUtils/clustered_0.5km_grid.shp'
+GRID_PATH = 'data/interim/geodata/vector/geoUtils/0.5km_grid.shp'
+
+def readGrid():
+    clustered_grid_path = clusterGrid(GRID_PATH)
+    print('Reading grid file')
+    grid = gpd.read_file(clustered_grid_path)
+
+    return grid
+
+def clusterGrid(grid_path, clusters = 5, overwrite = False):
+    print(f'#{__name__}.clusterGrid')
+
+    def main(grid_path,clusters):
+
+        # load grid
+        grid = gpd.read_file(grid_path)
+        centroids = grid.geometry.centroid
+
+        coords = np.vstack([centroids.x, centroids.y]).T
+
+        k = clusters
+        kmeans = KMeans(n_clusters=k, random_state=42).fit(coords)
+        grid['block_id'] = kmeans.labels_
+
+        grid.to_file(CLUSTERED_GRID_OUTPUT_PATH, driver='ESRI Shapefile')
+        print(f'Exported {CLUSTERED_GRID_OUTPUT_PATH}')
+
+    if os.path.isfile(CLUSTERED_GRID_OUTPUT_PATH):
+        print(f'Grid already clustered')
+        if overwrite:
+            print('Overwritting')
+            main(grid_path,clusters)
+        else:
+            pass
+    else:
+        main(grid_path,clusters)
+
+    return CLUSTERED_GRID_OUTPUT_PATH
 
 def clip_grid_per_region(perimeter_gdf, grid, debug = False, keep_cols = False):
 

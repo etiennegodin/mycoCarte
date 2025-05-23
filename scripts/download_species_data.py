@@ -6,7 +6,7 @@ from zipfile import ZipFile
 
 from pygbif import occurrences as occ
 
-from mycoCarte.utils import create_geometry_from_coordinates
+from mycoCarte.Utils import create_geometry_from_coordinates
 from mycoCarte.Species import Specie
 
 USER = 'egodin'
