@@ -1,9 +1,10 @@
-fiona
 geopandas
-matplotlib
-numpy
 pandas
-pygbif
 rasterio
+fiona
+numpy==1.26.4
+matplotlib
 scikit-learn
 shapely
+pygbif
+asyncio

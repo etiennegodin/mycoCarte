@@ -1,0 +1,3 @@
+
+
+I have a dataset with numerical, ordered, categorical features. It is derived from environmental variables and speices occurences from gbif. Each row is a cell of a geographic grid.  I want to build a predictive model in python using this dataset and my target feature is species richness ( calculated from # of unique species occurences per cell). I also have bias features like population density, distance to road, etc to explain biases in my occurences.

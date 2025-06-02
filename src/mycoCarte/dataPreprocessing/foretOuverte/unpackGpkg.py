@@ -11,7 +11,7 @@ gdf_columns = ['geoc_maj', 'geometry']
 all_columns = ordinal_columns + categorical_columns + gdf_columns
 
 INPUT_GPKG_PATH = 'data/raw/geodata/foretOuverte/PEE_MAJ_PROV/gpkg'
-OUPTUT_SHP_PATH = 'data/interim/geodata/vector/mergedGpkg'
+OUPTUT_SHP_PATH = 'data/interim/geodata/vector/mergedGpkg/'
 
 def combine_gpkg_layers(gpkg_file, layers, verbose = False):
     

@@ -14,7 +14,8 @@ setup(
         'matplotlib',
         'scikit-learn',
         'shapely',
-        'pygbif'
-        'asyncio'
+        'pygbif',
+        'asyncio',
+        'seaborn'
     ],
     )

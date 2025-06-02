@@ -6,37 +6,39 @@ from mycoCarte import Utils
 def cleanOccurencesData(csv_occurences_path,cleaned_occurences_path, overwrite = False ):
     """
     Input : Takes in a csv path of occurences, reads and cleans it
-    Output: Dict {path : Dataframe of cleaned occurences}
+    Output: path
     """
 
     print(f'#{__name__}.cleanOccurencesData')
 
     def process():
         # read csv
-        df = pd.read_csv(csv_occurences_path)
+        df = pd.read_csv(csv_occurences_path, index_col= 0)
+        print(df.shape[0])
 
         # keep only canada & quebec
         df = df[df.countryCode == 'CA']
         df = df[df.stateProvince == 'Québec']
+        print(df.shape[0])
 
         # remove occurences with same latLong values (preserved specimens from older sources)
         df = df.drop_duplicates(subset=['decimalLatitude'], keep = 'last')
         df = df.drop_duplicates(subset=['decimalLongitude'],keep = 'last')
+        print(df.shape[0])
 
         # remove before 2000
         df = df[df.year >= 2000]
+        print(df.shape[0])
+
+        # Remove points where coordinateUncertaintyInMeters is over 500
+        df = df[df.coordinateUncertaintyInMeters <= 500]
+        print(df.shape[0])
 
         df.to_csv(cleaned_occurences_path, index = False)
         print('Writting cleaned occurences to:')
         print(cleaned_occurences_path)
 
-        output = {cleaned_occurences_path :df}
-        return output
-    
-    def read():
-        df = pd.read_csv(csv_occurences_path)
-        output = {cleaned_occurences_path : df}
-        return output
+        return cleaned_occurences_path
 
     if os.path.isfile(cleaned_occurences_path):
         print(f'Cleaned occurences already on file')
@@ -45,14 +47,14 @@ def cleanOccurencesData(csv_occurences_path,cleaned_occurences_path, overwrite =
             output = process()
         else:
             # Written, not overriding, just reading it back to create dict and df 
-            output = read()
+            output = cleaned_occurences_path
     else:
         output = process
     
     return output
 
 def spatialJoin(cleaned_occurences_path, grid_path, sjoin_occurence_path, overwrite = False):
-    print(f'#{__name__}.main')
+    print(f'#{__name__}.spatialJoin')
     
     def process():
         # load grid 
@@ -86,8 +88,19 @@ def spatialJoin(cleaned_occurences_path, grid_path, sjoin_occurence_path, overwr
 
     return df 
 
-def preprocessData():
+def preprocessData(overwrite = False):
+    print(f'#{__name__}.preprocessData')
+
+    cleaned_occurences_path = cleanOccurencesData('data/raw/occurences/allOcurrences.csv',
+                                                   'data/interim/occurences/filteredOcurrences.csv',
+                                                     overwrite= overwrite)
+    df = spatialJoin(cleaned_occurences_path,
+                'data/interim/geodata/vector/geoUtils/0.5km_grid.shp',
+                'data/interim/occurences/griddedOccurences.csv',
+                overwrite= overwrite)
     
-    cleanOccurencesData()
-    spatialJoin()
-    pass
+    return df
+    
+
+if __name__ == '__main__':
+    preprocessData(overwrite = True)

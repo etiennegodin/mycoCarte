@@ -27,7 +27,7 @@ def aggregate(encoded_foretOuvert_gdf: gpd.GeoDataFrame,
                             grid: gpd.GeoDataFrame,
                             region : str,
                             subset_output_path : str,
-                            write = True, verbose = False):
+                            verbose = False):
     print(f'#{__name__}.aggregateForetOuverte')
     print(f'Aggregating data for {region}')
 
@@ -40,7 +40,7 @@ def aggregate(encoded_foretOuvert_gdf: gpd.GeoDataFrame,
     print(foretOuverte_gdf.head())
 
     # Clip full grid by perimeter 
-    clipped_grid = geoUtils.clip_grid_per_region(perimeter_gdf,grid, debug= True, keep_cols= ['FID', 'geometry', 'block_id'])
+    clipped_grid = geoUtils.clip_grid_per_region(perimeter_gdf,grid, debug= False, keep_cols= ['FID', 'geometry', 'block_id'])
 
     # Foret ouvert gdf spatial join with clipped grid 
     # Assign each vector shape of foret ouverte a value of grid id 
@@ -56,17 +56,9 @@ def aggregate(encoded_foretOuvert_gdf: gpd.GeoDataFrame,
         print(e)
 
     result_gdf = clipped_grid.merge(aggregated_gdf, on = 'FID',how = 'left')
-    if write:
-        output_file = subset_output_path + f'{region}_grid.shp'
-    try: 
-        result_gdf.to_file(output_file, driver='ESRI Shapefile')
-        print(f'Saved {output_file}')
-    except Exception as e:
-        print("Failed to export shp")
-        print(e)
 
-            #export as csv
-    output_csv = subset_output_path + f'csv/{region}_grid.csv'
+    #export as csv
+    output_csv = subset_output_path
     df = Utils.gdf_to_df(result_gdf)
     try:
         df.to_csv(output_csv, index = False)
@@ -79,12 +71,14 @@ def aggregate(encoded_foretOuvert_gdf: gpd.GeoDataFrame,
     del df
     gc.collect()
 
+    return output_csv
+
 
 def mergeAllDataset(grid: gpd.GeoDataFrame, gdfs :list, output_path: str = None, write =True):
     print(f'#{__name__}.mergeAllDataset')
 
-    shp_output_path = output_path + 'preprocessedData.shp'
-    csv_output_path = output_path + 'preprocessedData.csv'
+    shp_output_path = output_path + 'foretOuvertePreprocessed.shp'
+    csv_output_path = output_path + 'foretOuvertePreprocessed.csv'
 
     final_gdf = grid
 

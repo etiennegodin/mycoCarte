@@ -1,4 +1,5 @@
 import geopandas as gpd 
+import os
 CLUSTERED_GRID_OUTPUT_PATH = 'data/interim/geodata/vector/geoUtils/clustered_0.5km_grid.shp'
 GRID_PATH = 'data/interim/geodata/vector/geoUtils/0.5km_grid.shp'
 
