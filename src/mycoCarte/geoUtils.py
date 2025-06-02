@@ -1,22 +1,26 @@
 import geopandas as gpd 
 import os
+import numpy as np
+
+from sklearn.cluster import KMeans
 CLUSTERED_GRID_OUTPUT_PATH = 'data/interim/geodata/vector/geoUtils/clustered_0.5km_grid.shp'
 GRID_PATH = 'data/interim/geodata/vector/geoUtils/0.5km_grid.shp'
 
-def readGrid():
-    clustered_grid_path = clusterGrid(GRID_PATH)
+def readGrid(overwrite = False):
+    clustered_grid_path = clusterGrid(GRID_PATH, overwrite = overwrite)
     print('Reading grid file')
     grid = gpd.read_file(clustered_grid_path)
 
     return grid
 
-def clusterGrid(grid_path, clusters = 5, overwrite = False):
+def clusterGrid(grid_path = GRID_PATH, clusters = 5, overwrite = False):
     print(f'#{__name__}.clusterGrid')
 
     def main(grid_path,clusters):
 
         # load grid
         grid = gpd.read_file(grid_path)
+        grid = grid.to_crs(4326)
         centroids = grid.geometry.centroid
 
         coords = np.vstack([centroids.x, centroids.y]).T

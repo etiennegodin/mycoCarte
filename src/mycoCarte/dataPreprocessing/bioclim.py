@@ -36,7 +36,7 @@ def preprocessData(overwrite = False):
         df.to_csv(output_path)
 
     else:
-        df = pd.read_csv(output_path)
+        df = pd.read_csv(output_path, index_col= 0)
         
     return df
 

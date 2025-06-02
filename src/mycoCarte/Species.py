@@ -3,6 +3,7 @@ from mycoCarte import Utils
 # Species class based on gbif 
 class Specie:
     def __init__(self, specie_name):
+        self._specie_name = specie_name
         self.getGbifSpeciesInfo(specie_name)
         self.name_underscored = self.species.replace(' ', '_')
         self.prepare_gbif_query()
@@ -28,9 +29,10 @@ class Specie:
     def getGbifSpeciesInfo(self, specie_name, kingdom='fungi'):
         
         results = sp.name_backbone(name=specie_name, kingdom= kingdom)
-        for key, value in results.items():
-            self.__setattr__(key, value)
-        
+        if results:
+            for key, value in results.items():
+                self.__setattr__(key, value)
+
     def set_request_key(self,key):
         self.request_key = key
     

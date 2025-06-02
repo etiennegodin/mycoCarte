@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import geopandas as gpd
 from mycoCarte import Utils
+from numpy import NaN
 
 def cleanOccurencesData(csv_occurences_path,cleaned_occurences_path, overwrite = False ):
     """
@@ -34,6 +35,8 @@ def cleanOccurencesData(csv_occurences_path,cleaned_occurences_path, overwrite =
         df = df[df.coordinateUncertaintyInMeters <= 500]
         print(df.shape[0])
 
+        
+
         df.to_csv(cleaned_occurences_path, index = False)
         print('Writting cleaned occurences to:')
         print(cleaned_occurences_path)
@@ -61,7 +64,7 @@ def spatialJoin(cleaned_occurences_path, grid_path, sjoin_occurence_path, overwr
         grid = gpd.read_file(grid_path)
 
         #load occurences
-        df = pd.read_csv(cleaned_occurences_path)
+        df = pd.read_csv(cleaned_occurences_path, index_col= 0)
         gdf = Utils.df_to_gdf(df, xy = ['decimalLongitude','decimalLatitude'])
         #spatial join
         joined_gdf = gpd.sjoin(gdf, grid, how ='inner', predicate= 'intersects')
@@ -88,6 +91,25 @@ def spatialJoin(cleaned_occurences_path, grid_path, sjoin_occurence_path, overwr
 
     return df 
 
+def biasFilter(occ_df, bias_df):
+    print(f'#{__name__}.biasFilter')
+
+    try:
+        temp_df = occ_df.merge(bias_df, on = 'FID',how = 'left')
+    except Exception as e:
+        print('Failed to merge foretOuverte_df data')
+        print(e)
+
+    print(occ_df.shape[0])
+    temp_df = temp_df[temp_df.urbanArea != 1]
+
+    #Keep only rows of original df from filtered temp_df
+    common_idx = occ_df.index.intersection(temp_df.index)
+    occ_df = occ_df.loc[common_idx]
+    print(occ_df.shape[0])
+    return occ_df
+    
+
 def preprocessData(overwrite = False):
     print(f'#{__name__}.preprocessData')
 
@@ -99,6 +121,7 @@ def preprocessData(overwrite = False):
                 'data/interim/occurences/griddedOccurences.csv',
                 overwrite= overwrite)
     
+    print(f'Occurences df shape = {df.shape}')
     return df
     
 

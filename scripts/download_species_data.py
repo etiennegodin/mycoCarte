@@ -13,6 +13,15 @@ USER = 'egodin'
 PWD = '4AWkTW8_4D$8q7.'
 EMAIL = 'etiennegodin@duck.com'
 
+def filter_species_instances(species_instances):
+    filtered_species_instances = []
+    for specie in species_instances:
+        if not hasattr(specie, 'key'):
+            filtered_species_instances.append(specie)
+        else:
+            print(f"{specie._specie_name} doesn't have taxonKey from gbif, skipping")
+
+    return filtered_species_instances
 
 def create_species_instances(species_list_path, count = None):
 
@@ -226,9 +235,13 @@ if __name__ == '__main__':
 
     species_instances = create_species_instances(args.file, args.number)
 
+    species_instances = filter_species_instances(species_instances)
+
+
     gbif_complete = asyncio.run(main(species_instances))
 
     if gbif_complete:
         mergeAllOccurences(species_instances, 'data/raw/occurences/allOcurrences.csv')
+
 
 

@@ -65,7 +65,7 @@ def preprocessData(overwrite = False):
     if run: 
         combined_df = subset_processing(overwrite = overwrite)
     else:
-        combined_df = pd.read_csv(preprocessed_path)
+        combined_df = pd.read_csv(preprocessed_path, index_col= 0)
 
     return combined_df
 
