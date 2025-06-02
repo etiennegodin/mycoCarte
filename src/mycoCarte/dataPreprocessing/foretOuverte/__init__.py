@@ -18,10 +18,7 @@ def combineAllSubsets(dir_path : str):
 
     return df
 
-
 def preprocessData():
-
-
     grid = geoUtils.readGrid()
     regions_list = Utils.get_regionCodeList()
 
@@ -31,4 +28,4 @@ def preprocessData():
         gdf, perimeter_gdf = unpackGpkg.main(region)
         encoded_gdf = encoder.encode(gdf, region, verbose = True)
         aggregated_gdf = gridAggregate.aggregate(encoded_gdf, perimeter_gdf, grid, region)
-
+        

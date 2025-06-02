@@ -1,6 +1,7 @@
 import os 
 import pandas as pd
-
+import geopandas as gpd
+from mycoCarte import Utils
 
 def cleanOccurencesData(csv_occurences_path,cleaned_occurences_path, overwrite = False ):
     """
@@ -50,6 +51,43 @@ def cleanOccurencesData(csv_occurences_path,cleaned_occurences_path, overwrite =
     
     return output
 
+def spatialJoin(cleaned_occurences_path, grid_path, sjoin_occurence_path, overwrite = False):
+    print(f'#{__name__}.main')
+    
+    def process():
+        # load grid 
+        grid = gpd.read_file(grid_path)
 
-def preprocessOccurenceData():
+        #load occurences
+        df = pd.read_csv(cleaned_occurences_path)
+        gdf = Utils.df_to_gdf(df, xy = ['decimalLongitude','decimalLatitude'])
+        #spatial join
+        joined_gdf = gpd.sjoin(gdf, grid, how ='inner', predicate= 'intersects')
+        joined_gdf = joined_gdf.drop(['index_right'], axis = 1)
+
+        df = Utils.gdf_to_df(joined_gdf)
+        df.to_csv(sjoin_occurence_path, index  = False)
+        return df 
+
+    def read():
+        df = pd.read_csv(sjoin_occurence_path)
+        return df 
+    
+    if os.path.isfile(sjoin_occurence_path):
+        if overwrite:
+            print('Occurences already spatialy joined, ### overwritting ###')
+            df = process()
+        else:
+            print('Occurences already spatialy joined, reading')
+            df = read()
+    else:
+        print('Occurences not spatialy joined, processing')
+        df = process()
+
+    return df 
+
+def preprocessData():
+    
+    cleanOccurencesData()
+    spatialJoin()
     pass

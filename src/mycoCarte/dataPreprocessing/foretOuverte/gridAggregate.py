@@ -67,7 +67,7 @@ def aggregate(encoded_foretOuvert_gdf: gpd.GeoDataFrame,
 
             #export as csv
     output_csv = subset_output_path + f'csv/{region}_grid.csv'
-    df = utils.gdf_to_df(result_gdf)
+    df = Utils.gdf_to_df(result_gdf)
     try:
         df.to_csv(output_csv, index = False)
     except Exception as e:
