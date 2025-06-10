@@ -40,7 +40,7 @@ def aggregate(encoded_foretOuvert_gdf: gpd.GeoDataFrame,
     print(foretOuverte_gdf.head())
 
     # Clip full grid by perimeter 
-    clipped_grid = geoUtils.clip_grid_per_region(perimeter_gdf,grid, debug= False, keep_cols= ['FID', 'geometry', 'block_id'])
+    clipped_grid = geoUtils.clip_grid_per_region(perimeter_gdf,grid, debug= False, keep_cols= ['FID', 'geometry'])
 
     # Foret ouvert gdf spatial join with clipped grid 
     # Assign each vector shape of foret ouverte a value of grid id 

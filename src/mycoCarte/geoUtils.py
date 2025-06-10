@@ -7,9 +7,10 @@ CLUSTERED_GRID_OUTPUT_PATH = 'data/interim/geodata/vector/geoUtils/clustered_0.5
 GRID_PATH = 'data/interim/geodata/vector/geoUtils/0.5km_grid.shp'
 
 def readGrid(overwrite = False):
-    clustered_grid_path = clusterGrid(GRID_PATH, overwrite = overwrite)
+    print(f'#{__name__}.readGrid')
+
+    grid  = clusterGrid(GRID_PATH, overwrite = overwrite)
     print('Reading grid file')
-    grid = gpd.read_file(clustered_grid_path)
 
     return grid
 
@@ -30,19 +31,22 @@ def clusterGrid(grid_path = GRID_PATH, clusters = 5, overwrite = False):
         grid['block_id'] = kmeans.labels_
 
         grid.to_file(CLUSTERED_GRID_OUTPUT_PATH, driver='ESRI Shapefile')
-        print(f'Exported {CLUSTERED_GRID_OUTPUT_PATH}')
-
+        print(f'Exported {CLUSTERED_GRID_OUTPUT_PATH}'
+              )
+        return grid 
+    
     if os.path.isfile(CLUSTERED_GRID_OUTPUT_PATH):
         print(f'Grid already clustered')
         if overwrite:
             print('Overwritting')
-            main(grid_path,clusters)
+            grid = main(grid_path,clusters)
         else:
-            pass
-    else:
-        main(grid_path,clusters)
+            grid = gpd.read_file(CLUSTERED_GRID_OUTPUT_PATH)
 
-    return CLUSTERED_GRID_OUTPUT_PATH
+    else:
+        grid = main(grid_path,clusters)
+
+    return grid
 
 def clip_grid_per_region(perimeter_gdf, grid, debug = False, keep_cols = False):
 

@@ -38,6 +38,9 @@ def preprocessData(overwrite = False):
     else:
         df = pd.read_csv(output_path, index_col= 0)
         
+    # Remove rows with Nans 
+    df.dropna(axis = 0, how = 'any', inplace= True)
+
     return df
 
 

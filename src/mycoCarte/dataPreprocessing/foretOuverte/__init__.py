@@ -1,3 +1,4 @@
+### FORET OUVERTE PRFEPROCESSING MODULE ###
 import os
 import pandas as pd
 from mycoCarte import Utils, geoUtils
@@ -14,7 +15,9 @@ def combineAllSubsets(dir_path : str):
 
     for i, subset in enumerate(subsets_list):
         print(f'Combining {subset} ({i+1}/{len(subsets_list)})')
+
         df_temp = pd.read_csv(dir_path + subset, low_memory= False)
+        df_temp['regionCode'] = i
         df = pd.concat([df,df_temp])
     
     print('#Combined all subsets#')
@@ -46,11 +49,16 @@ def subset_processing(overwrite = False):
         else:
             preprocessed_dfs.append(region_subset_path)
 
-
     if len(preprocessed_dfs) == len(regions_list):
-        combined_df = combineAllSubsets('data/interim/geodata/vector/sampled_grid/csv/')
-        combined_df.to_csv('data/interim/geodata/vector/foretOuvertePreprocessed/foretOuvertePreprocessed.csv')
+        combined_df = combineAllSubsets(region_subset_dir)
+        combined_df.to_csv(preprocessed_path)
+        
     return combined_df
+
+def postAddRegionCode(region_subset_dir = region_subset_dir):
+
+    combined_df = combineAllSubsets(region_subset_dir)
+    combined_df.to_csv(preprocessed_path)
 
 def preprocessData(overwrite = False):
     print(f'#{__name__}.preprocessData')
@@ -67,6 +75,11 @@ def preprocessData(overwrite = False):
     else:
         combined_df = pd.read_csv(preprocessed_path, index_col= 0)
 
+    # Remove rows with Nans 
+    combined_df.dropna(axis = 0, how = 'any', inplace= True)
+
     return combined_df
 
     
+if __name__ == '__main__':
+    postAddRegionCode()
