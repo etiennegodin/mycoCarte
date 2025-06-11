@@ -11,4 +11,3 @@ data/output/
 #qgis
 *.qgz
 *.xlsx
-*.ipynb
