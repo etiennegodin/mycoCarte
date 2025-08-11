@@ -256,5 +256,31 @@ if __name__ == '__main__':
 
     #delete_files_with_suffix(parent_folder, suffix, length = 400, dry_run = False)
 
-class ClassTest():
-    pass
+
+def encodeBioclim(df):
+
+    biolcimEncodingDict = { 'bioclim_01' : 'Annual Mean Temp',
+                            'bioclim_02' : 'Mean Diurnal Range',
+                            'bioclim_03' : 'Isothermality',
+                            'bioclim_04' : 'Temp Seasonality',
+                            'bioclim_05' : 'Max Temp of Warmest Month',
+                            'bioclim_06' : 'Min Temp of Coldest Month',
+                            'bioclim_07' : 'Temp Annual Range',
+                            'bioclim_08' : 'Mean Temp of Wettest Quarter',
+                            'bioclim_09' : 'Mean Temp of Driest Quarter',
+                            'bioclim_10' : 'Mean Temp of Warmest Quarter',
+                            'bioclim_11' : 'Mean Temp of Coldest Quarter',
+                            'bioclim_12' : 'Annual Precip',
+                            'bioclim_13' : 'Precip of Wettest Month',
+                            'bioclim_14' : 'Precip of Driest Month',
+                            'bioclim_15' : 'Precip Seasonality',
+                            'bioclim_16' : 'Precip of Wettest Quarter',
+                            'bioclim_17' : 'Precip of Driest Quarter',
+                            'bioclim_18' : 'Precip of Warmest Quarter',
+                            'bioclim_19' : 'Precip of Coldest Quarter'
+                        }
+    
+
+    df = df.rename(columns = biolcimEncodingDict)
+    return df
+
