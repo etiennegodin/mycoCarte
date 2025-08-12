@@ -2,10 +2,9 @@ import pandas as pd
 import datetime
 from numpy import NaN
 
-path = 'data/raw/occurences/iNaturalist_all_Basidiomycetes.csv'
 
 
-def filter(df, key,value, operator = 'equal'):
+def filter(df, key,value):
     df = df[df[key] == value]
     print(f'Filtering {key} by {value}, new df size = {df.shape[0]}')
     return df
@@ -27,7 +26,6 @@ def cleanOccurences(path):
         'url',
         'latitude',
         'longitude',
-        'positional_accuracy',
         'coordinates_obscured',
         'scientific_name',
         'taxon_id'
@@ -38,7 +36,6 @@ def cleanOccurences(path):
     print(f'Reading {df.shape[0]} occurences')
 
     # Data Type restructure 
-    print(df.dtypes)
 
     #Observed On string to datetime 
     df['observed_on'] = pd.to_datetime(df['observed_on'])
@@ -47,19 +44,21 @@ def cleanOccurences(path):
     df.loc[df['quality_grade'] == 'needs_id', 'quality_grade'] = 0
     df.loc[df['quality_grade'] == 'research', 'quality_grade'] = 1
 
-    print(df)
-    # Filtering
-    df = filter(df, 'quality_grade', 1)
-    df = filter(df, 'coordinates_obscured', False)
+
+    convert_dict = {'quality_grade': int}
+    df = df.astype(convert_dict)
+
+    print(df.dtypes)
+
 
     # Dropping duplicates
     df = drop_duplicates(df, ['id'])
     df = drop_duplicates(df, ['latitude'])
     df = drop_duplicates(df, ['longitude'])
 
-    print(df.head())
+    return df 
 
+if __name__ == '__main__':
+    path = 'data/raw/occurences/iNaturalist_all_Basidiomycetes.csv'
 
-
-
-cleanOccurences(path)
+    df = cleanOccurences(path)

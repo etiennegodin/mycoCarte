@@ -13,11 +13,17 @@ src/mycoCarte/dataGathering/__init__.py
 src/mycoCarte/dataGathering/download_twi.py
 src/mycoCarte/dataGathering/foretOuverte.py
 src/mycoCarte/dataPreprocessing/__init__.py
+src/mycoCarte/dataPreprocessing/bias.py
+src/mycoCarte/dataPreprocessing/bioclim.py
+src/mycoCarte/dataPreprocessing/dataCleaning.py
 src/mycoCarte/dataPreprocessing/occurences.py
 src/mycoCarte/dataPreprocessing/foretOuverte/__init__.py
 src/mycoCarte/dataPreprocessing/foretOuverte/encoder.py
 src/mycoCarte/dataPreprocessing/foretOuverte/gridAggregate.py
 src/mycoCarte/dataPreprocessing/foretOuverte/unpackGpkg.py
+src/mycoCarte/eda/__init__.py
 src/mycoCarte/environmentClassification/__init__.py
 src/mycoCarte/environmentClassification/eda.py
 src/mycoCarte/featureEnginering/__init__.py
+src/mycoCarte/modelling/__init__.py
+src/mycoCarte/sdms/__init__.py

@@ -11,4 +11,5 @@ Requires-Dist: scikit-learn
 Requires-Dist: shapely
 Requires-Dist: pygbif
 Requires-Dist: asyncio
+Requires-Dist: seaborn
 Dynamic: requires-dist

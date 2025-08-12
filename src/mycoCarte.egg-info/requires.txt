@@ -8,3 +8,4 @@ scikit-learn
 shapely
 pygbif
 asyncio
+seaborn
