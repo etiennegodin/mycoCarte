@@ -1,5 +1,4 @@
-import geopandas as gpd 
-
+import geopandas as gpd
 
 def mergeAllDataset(grid: gpd.GeoDataFrame, gdfs :list, output_path: str = None, write =True):
     print(f'#{__name__}.mergeAllDataset')

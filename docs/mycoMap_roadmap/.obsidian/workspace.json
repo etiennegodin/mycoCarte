@@ -13,29 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Carbon  Nitrogen ratio.md",
+                "file": "dataSources list.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Carbon  Nitrogen ratio"
+              "title": "dataSources list"
             }
           },
           {
-            "id": "6df08508d2e639aa",
+            "id": "489750a2b2df2093",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Untitled.canvas",
-                "viewState": {
-                  "x": 0,
-                  "y": 223.20000000000002,
-                  "zoom": 0
-                }
+                "file": "01_SpecieSDM.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "Untitled"
+              "icon": "lucide-file",
+              "title": "01_SpecieSDM"
             }
           }
         ],
@@ -58,8 +55,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical",
-                "autoReveal": false
+                "sortOrder": "alphabetical"
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -186,15 +182,18 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "6df08508d2e639aa",
+  "active": "489750a2b2df2093",
   "lastOpenFiles": [
-    "Untitled.canvas",
     "Roadmap.md",
-    "Wood decay.md",
-    "old.md",
-    "Carbon  Nitrogen ratio.md",
-    "Foret Ouverte Data Dictionnary.md",
+    "01_SpecieSDM.md",
+    "satellite band choice.md",
+    "dataSources list.md",
+    "Untitled.canvas",
     "Soil Moisture.md",
+    "Carbon  Nitrogen ratio.md",
+    "old.md",
+    "Wood decay.md",
+    "Foret Ouverte Data Dictionnary.md",
     "soil Ph.md",
     "Welcome.md",
     "roadmap.canvas",

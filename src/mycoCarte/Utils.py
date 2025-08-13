@@ -284,3 +284,8 @@ def encodeBioclim(df):
     df = df.rename(columns = biolcimEncodingDict)
     return df
 
+def df_filter(df, key,value):
+    df = df[df[key] == value]
+    print(f'Filtering {key} by {value}, new df size = {df.shape[0]}')
+    return df
+

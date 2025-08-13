@@ -4,7 +4,7 @@ from numpy import NaN
 
 
 
-def filter(df, key,value, operator = 'equal'):
+def filter(df, key,value):
     df = df[df[key] == value]
     print(f'Filtering {key} by {value}, new df size = {df.shape[0]}')
     return df
@@ -24,17 +24,26 @@ def cleanOccurences(path):
         'observed_on',
         'quality_grade',
         'url',
+        'captive_cultivated',       
         'latitude',
         'longitude',
         'positional_accuracy',
-        'coordinates_obscured',
-        'scientific_name',
-        'taxon_id'
-        ]
+        'taxon_id',
+        'taxon_class_name','taxon_order_name','taxon_family_name','taxon_genus_name','taxon_species_name'
+          ]
 
     df = pd.read_csv(path, usecols=cols)
-    print(df)
     print(f'Reading {df.shape[0]} occurences')
+
+    #Rename taxon cols:
+    cols_rename = { 'taxon_class_name' : 'taxon_class',
+                   'taxon_order_name' : 'taxon_order',
+                   'taxon_family_name' : 'taxon_family',
+                   'taxon_genus_name' : 'taxon_genus',
+                   'taxon_species_name' : 'taxon_species',
+    }
+
+    df.rename(columns = cols_rename, inplace= True)
 
     # Data Type restructure 
 
@@ -51,15 +60,20 @@ def cleanOccurences(path):
 
     print(df.dtypes)
 
-
     # Dropping duplicates
     df = drop_duplicates(df, ['id'])
     df = drop_duplicates(df, ['latitude'])
     df = drop_duplicates(df, ['longitude'])
 
     return df 
-
+def test():
+    print('test')
+    
 if __name__ == '__main__':
     path = 'data/raw/occurences/iNaturalist_all_Basidiomycetes.csv'
 
     df = cleanOccurences(path)
+    print(df)
+
+print(datetime.datetime.now())
+print('prut')

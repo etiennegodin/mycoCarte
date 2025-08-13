@@ -15,8 +15,8 @@ src/mycoCarte/dataGathering/foretOuverte.py
 src/mycoCarte/dataPreprocessing/__init__.py
 src/mycoCarte/dataPreprocessing/bias.py
 src/mycoCarte/dataPreprocessing/bioclim.py
-src/mycoCarte/dataPreprocessing/dataCleaning.py
 src/mycoCarte/dataPreprocessing/occurences.py
+src/mycoCarte/dataPreprocessing/occurencesPreprocessing.py
 src/mycoCarte/dataPreprocessing/foretOuverte/__init__.py
 src/mycoCarte/dataPreprocessing/foretOuverte/encoder.py
 src/mycoCarte/dataPreprocessing/foretOuverte/gridAggregate.py

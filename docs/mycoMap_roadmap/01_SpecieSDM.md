@@ -1,0 +1,13 @@
+- [ ]Gather Occurence Data 
+	- Inaturalist request for all observations
+	- Do not discriminate by verified for now, getting all possible repartition and also at genus level 
+	- Keep only relevant columns and remove observations duplocates or without coordinates 
+- [ ]  Spatial thinning occurences
+- [ ] Classify occurence by time
+	- [ ] Determine min max dates 
+- [ ] Select spatial resolution 
+- [ ] Select Predictors in GEE
+- [ ] Preprocess predictors from foretOuverte
+- [ ]Pseudo absence point generation 
+- [ ] Bias predictors enginering 
+- [ ]  
