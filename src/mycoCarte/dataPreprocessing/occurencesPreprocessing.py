@@ -3,13 +3,6 @@ import datetime
 from numpy import NaN
 
 
-
-def filter(df, key,value):
-    df = df[df[key] == value]
-    print(f'Filtering {key} by {value}, new df size = {df.shape[0]}')
-    return df
-
-
 def drop_duplicates(df, subset):
     """
     subset : list 
@@ -72,8 +65,9 @@ def cleanOccurences(path):
     print(na_counts)
 
     return df 
-def test():
-    print('test')
+
+def spatial_thinning(gdf):
+    pass
 
 if __name__ == '__main__':
     path = 'data/raw/occurences/iNaturalist_all_Basidiomycetes.csv'
@@ -81,4 +75,3 @@ if __name__ == '__main__':
     df = cleanOccurences(path)
     print(df)
 
-print(datetime.datetime.now())

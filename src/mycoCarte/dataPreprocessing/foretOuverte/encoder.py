@@ -153,10 +153,9 @@ def processs_forest_ecology_indexes(gdf, verbose  = False):
 
     return gdf
 
-def encode(gdf, region, verbose = False):
+def encode(gdf, verbose = False):
     print(f'#{__name__}.encodeForetOuverteData')
 
-    print(f'Encoding data for {region}')
     gdf = encode_vector_fields(gdf, verbose = verbose)
     gdf = encode_dep_sur(gdf, verbose = verbose)
     gdf = encode_tree_cover(gdf, verbose = verbose)
